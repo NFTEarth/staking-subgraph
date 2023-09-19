@@ -1,0 +1,16 @@
+{
+  "arbitrum-one": {
+    "VotingEscrow": {
+      "address": "0xE57bd15448C3b2D1dBAD598775DD2F36F93EBf90",
+      "startBlock": 131720919
+    },
+    "FeeDistributor": {
+      "address": "0x9138A2e628f92a42397B3B600E86047AE49aCa98",
+      "startBlock": 131738122
+    },
+    "NFTELP": {
+      "address": "0x82496243c0a1a39c5c6250bf0115c134Ba76698c",
+      "startBlock": 131287770
+    }
+  }
+}

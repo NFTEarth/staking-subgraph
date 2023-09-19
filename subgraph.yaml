@@ -1,0 +1,73 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NFTELP
+    network: arbitrum-one
+    source:
+      address: "0x82496243c0a1a39c5c6250bf0115c134Ba76698c"
+      abi: NFTELP
+      startBlock: 131287770
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NFTELPToken
+        - Depositor
+      abis:
+        - name: NFTELP
+          file: ./abis/NFTELP.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./mappings/nftelp.ts
+  - kind: ethereum
+    name: VotingEscrow
+    network: arbitrum-one
+    source:
+      address: "0xE57bd15448C3b2D1dBAD598775DD2F36F93EBf90"
+      abi: VotingEscrow
+      startBlock: 131720919
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NFTELPToken
+        - Depositor
+      abis:
+        - name: VotingEscrow
+          file: ./abis/VotingEscrow.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256,indexed uint256,uint8,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+      file: ./mappings/voting-escrow.ts
+#  - kind: ethereum
+#    name: FeeDistributor
+#    network: arbitrum-one
+#    source:
+#      address: "0x9138A2e628f92a42397B3B600E86047AE49aCa98"
+#      abi: FeeDistributor
+#      startBlock: 131738122
+#    mapping:
+#      kind: ethereum/events
+#      apiVersion: 0.0.7
+#      language: wasm/assemblyscript
+#      entities:
+#        - NFTELPToken
+#        - Depositor
+#      abis:
+#        - name: FeeDistributor
+#          file: ./abis/FeeDistributor.json
+#      eventHandlers:
+#        - event: TokenCheckpointed(address,uint256,uint256)
+#          handler: handleTokenCheckpointed
+#        - event: TokenWithdrawn(address,uint256,address)
+#          handler: handleTokenWithdrawn
+#        - event: TokensClaimed(address,address,uint256,uint256)
+#          handler: handleTokensClaimed
+#      file: ./mappings/fee-distributor.ts
