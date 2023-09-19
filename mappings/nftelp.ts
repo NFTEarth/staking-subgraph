@@ -2,7 +2,7 @@ import {Transfer} from "../generated/NFTELP/NFTELP";
 import { ignoreTransfer } from "./utils/escrow";
 import initializeToken from "./utils/initializeToken";
 import initializeDepositor from "./utils/initializeDepositor";
-import fetchBalance from "./utils/eth_calls/fetchBalance";
+import updateBalance from "./utils/eth_calls/updateBalance";
 
 export function handleTransfer(event: Transfer): void {
   /**
@@ -16,11 +16,15 @@ export function handleTransfer(event: Transfer): void {
   let senderTokenAccount = initializeDepositor(event.params.from, token);
   let receiverTokenAccount = initializeDepositor(event.params.to, token);
 
-  const senderBalance = fetchBalance(event.params.from)
-  senderTokenAccount.totalBalance = senderBalance.minus(senderTokenAccount.lockedBalance);
-  senderTokenAccount.save();
+  updateBalance(
+    event.address,
+    event.params.from,
+    senderTokenAccount
+  )
 
-  const receiverBalance = fetchBalance(event.params.to)
-  receiverTokenAccount.totalBalance = receiverBalance.plus(receiverTokenAccount.lockedBalance);
-  receiverTokenAccount.save();
+  updateBalance(
+    event.address,
+    event.params.to,
+    receiverTokenAccount
+  )
 }
